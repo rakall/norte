@@ -76,7 +76,7 @@ resource "azurerm_public_ip_prefix" "ips_prefix" {
 }
 
 module "pips" {
-  source               = "git::https://github.alm.europe.cloudcenter.corp/ccc-ccoe/eac.az.modules.pip-firewall.git?ref=v1.0.1"
+  source               = "git::https://github.com/rakall/pips"
   location             = var.location
   resource_group       = var.resource_group
   sku                  = "Standard"
