@@ -43,14 +43,7 @@ resource "azurerm_public_ip_prefix" "public_ip_prefix" {
   location            = var.location
   resource_group_name = var.resource_group
   prefix_length       = 28
-  tags = {
-    channel       = var.channel
-    cia           = var.cia
-    cost_center   = data.azurerm_resource_group.rsg.tags["cost_center"]
-    product       = data.azurerm_resource_group.rsg.tags["product"]
-    description   = var.description
-    tracking_code = var.tracking_code
-  }
+
 }
 data "azurerm_public_ip_prefix" "data_pip_prefix" {
   name                = "${local.elb_name}-ppp01"
@@ -65,14 +58,7 @@ resource "azurerm_public_ip_prefix" "ips_prefix" {
   location            = var.location
   resource_group_name = var.resource_group
   prefix_length       = 28 # 29
-  tags = {
-    channel       = var.channel
-    cia           = var.cia
-    cost_center   = data.azurerm_resource_group.rsg.tags["cost_center"]
-    product       = data.azurerm_resource_group.rsg.tags["product"]
-    description   = var.description
-    tracking_code = var.tracking_code
-  }
+
 }
 
 module "pips" {
@@ -121,14 +107,6 @@ resource "azurerm_lb" "elb" {
       public_ip_address_id = frontend_ip_configuration.value["public_ip_address_id"]
 
     }
-  }
-  tags = {
-    channel       = var.channel
-    cia           = var.cia
-    cost_center   = data.azurerm_resource_group.rsg.tags["cost_center"]
-    product       = data.azurerm_resource_group.rsg.tags["product"]
-    description   = var.description
-    tracking_code = var.tracking_code
   }
   depends_on = [data.azurerm_public_ip.module-pips]
 }
@@ -221,15 +199,6 @@ resource "azurerm_lb" "ilb" {
     subnet_id                     = data.azurerm_subnet.snt_back_name.id
     private_ip_address            = cidrhost(data.azurerm_subnet.snt_back_name.address_prefix, 6)
     private_ip_address_allocation = "static"
-  }
-
-  tags = {
-    channel       = var.channel
-    cia           = var.cia
-    cost_center   = data.azurerm_resource_group.rsg.tags["cost_center"]
-    product       = data.azurerm_resource_group.rsg.tags["product"]
-    description   = var.description
-    tracking_code = var.tracking_code
   }
 }
 
@@ -367,12 +336,6 @@ resource "azurerm_linux_virtual_machine_scale_set" "linux_nvavss" {
   }
   tags = {
     provider                    = "30DE18BC-F9F6-4F22-9D30-54B8E74CFD5F"
-    channel                     = var.channel
-    cia                         = var.cia
-    cost_center                 = data.azurerm_resource_group.rsg.tags["cost_center"]
-    product                     = data.azurerm_resource_group.rsg.tags["product"]
-    description                 = var.description
-    tracking_code               = var.tracking_code
     x-chkp-anti-spoofing        = "eth0:false,eth1:false"
     x-chkp-ip-address           = "public"
     x-chkp-management           = var.managementServer
