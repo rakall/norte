@@ -197,7 +197,7 @@ resource "azurerm_lb" "ilb" {
   frontend_ip_configuration {
     name                          = "frontname-${local.ilb_name}"
     subnet_id                     = data.azurerm_subnet.snt_back_name.id
-    private_ip_address            = cidrhost(data.azurerm_subnet.snt_back_name.address_prefix, 6)
+    private_ip_address            = cidrhost(data.azurerm_subnet.snt_back_name.address_prefix, 7)
     private_ip_address_allocation = "static"
   }
 }
